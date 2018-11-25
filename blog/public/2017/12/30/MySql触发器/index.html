@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] 什么是触发器触发器，顾名思义是在触发了某个动作之后而执行的一串数据库脚本。主要是用在数据的增、删、改动作之上。触发器的执行是自动的，只要触发器中监听的动作发生了触发器就会自动执行。 触发器的定义DROP TRIGGER IF EXISTS triggerName; -- just for update trigger CREATE TRIGGER triggerName BEFORE">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql触发器">
+<meta property="og:url" content="http://www.zhangsun.site/2017/12/30/MySql触发器/index.html">
+<meta property="og:site_name" content="Stupid Murphy">
+<meta property="og:description" content="[TOC] 什么是触发器触发器，顾名思义是在触发了某个动作之后而执行的一串数据库脚本。主要是用在数据的增、删、改动作之上。触发器的执行是自动的，只要触发器中监听的动作发生了触发器就会自动执行。 触发器的定义DROP TRIGGER IF EXISTS triggerName; -- just for update trigger CREATE TRIGGER triggerName BEFORE">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/30/MySql触发器/imgs/20180209-161422.png">
+<meta property="og:updated_time" content="2018-02-09T08:14:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySql触发器">
+<meta name="twitter:description" content="[TOC] 什么是触发器触发器，顾名思义是在触发了某个动作之后而执行的一串数据库脚本。主要是用在数据的增、删、改动作之上。触发器的执行是自动的，只要触发器中监听的动作发生了触发器就会自动执行。 触发器的定义DROP TRIGGER IF EXISTS triggerName; -- just for update trigger CREATE TRIGGER triggerName BEFORE">
+<meta name="twitter:image" content="http://www.zhangsun.site/2017/12/30/MySql触发器/imgs/20180209-161422.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Stupid Murphy" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://www.zhangsun.site/2017/12/30/MySql触发器/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MySql触发器 | Stupid Murphy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stupid Murphy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Haha</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />Schedule</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />Sitemap</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangsun.site/2017/12/30/MySql触发器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="人生没有白走的路，每一步都作数 ：）">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stupid Murphy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySql触发器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-12-30 14:12:04" itemprop="dateCreated datePublished" datetime="2017-12-30T14:12:04+08:00">2017-12-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-02-09 16:14:52" itemprop="dateModified" datetime="2018-02-09T16:14:52+08:00">2018-02-09</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h4 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h4><p>触发器，顾名思义是在触发了某个动作之后而执行的一串数据库脚本。主要是用在数据的增、删、改动作之上。触发器的执行是自动的，只要触发器中监听的动作发生了触发器就会自动执行。</p>
+<h4 id="触发器的定义"><a href="#触发器的定义" class="headerlink" title="触发器的定义"></a>触发器的定义</h4><pre><code>DROP TRIGGER IF EXISTS triggerName; -- just for update trigger
+CREATE TRIGGER triggerName BEFORE UPDATE
+  ON tableName FOR EACH ROW
+  BEGIN 
+      -- to do something
+  END;
+</code></pre><h4 id="触发器中的BEFORE-和-AFTER"><a href="#触发器中的BEFORE-和-AFTER" class="headerlink" title="触发器中的BEFORE 和 AFTER"></a>触发器中的BEFORE 和 AFTER</h4><p>BEFORE：(INSERT、UPDATE)可以对NEW中的数据进行拦截<strong>修改</strong>，<br>AFTER：不能对NEW进行修改。<br>两者都不能修改OLD（<strong>只读</strong>）数据，但是可以获取到OLD中的数据。即，触发器不能修改原来表中的数据。</p>
+<pre><code>DELIMITER $$
+DROP TRIGGER IF EXISTS updateTrigger;
+CREATE TRIGGER updateTrigger BEFORE UPDATE ON user FOR EACH ROW
+    BEGIN
+    DECLARE oldName VARCHAR(20);
+    DECLARE newName VARCHAR(20);
+    -- 测试更新操作之前能否对拿到OLD和NEW的虚拟表对象
+    SET newName = NEW.name;
+    SET oldName = OLD.name;
+    IF newName IS NOT NULL AND oldName IS NOT NULL THEN
+        SET NEW .name = &quot;error name&quot;;
+    END IF;
+    END $$
+
+DELIMITER ;
+
+-- 验证
+UPDATE user SET name = &quot;zhangsan&quot; WHERE id = 4;
+-- 查看结果
+SELECT * FROM user WHERE id = 4;
+</code></pre><p><img src="imgs/20180209-161422.png" alt=""></p>
+<p><strong>实例：</strong></p>
+<pre><code>-- 对user表中插入前的数据进行拦截修改用户名为大写
+DELIMITER $$
+DROP TRIGGER IF EXISTS nameToUpperCase;
+
+CREATE TRIGGER nameToUpperCase BEFORE INSERT ON user FOR EACH ROW
+    BEGIN
+    DECLARE upperName VARCHAR(20);
+    /*
+    对于insert 操作，只能修改插入的数据，而不能对数据库中原来的数据进行修改。
+    即：只能操作NEW对象，不能操作OLD对象
+    */
+    SET upperName = NEW.name;
+    SELECT upper(upperName) INTO upperName;
+    SET NEW.name = upperName;
+    END $$
+
+DELIMITER ;
+
+-- 向表中插入数据
+INSERT INTO user (name, age, gender, creator, create_time) VALUES (&quot;lowwer&quot;, 22, &quot;boy&quot;, 1, sysdate());
+
+-- 查询结果
+SELECT * FROM user WHERE age = 22;
+</code></pre><p><strong>总结：</strong><br>AFTER：是在记录操纵之后触发，是先完成数据的增删改，再触发，触发的语句晚于监视的增删改操作，无法影响前面的增删改动作<br>BEFORE：是在记录操纵之前触发，是先完成触发，再增删改，触发的语句先于监视的增删改，我们就有机会判断，修改即将发生的操作，如：我们在触发之前需要判断new值和old值的大小或关系，如果满足要求就触发，不通过就修改再触发；如：表之间定义的有外键，在删除主键时，必须要先删除外键表，这时就有先后之分，这里before相当于设置了断点，我们可以处理删除外键。</p>
+<h4 id="触发器中的NEW-和-OLD"><a href="#触发器中的NEW-和-OLD" class="headerlink" title="触发器中的NEW 和 OLD"></a>触发器中的NEW 和 OLD</h4><ul>
+<li>INSERT语句, 只有NEW是合法的，因为是新添加数据；</li>
+<li>DELETE语句，只有OLD才合法，因为没有新数据可以操作；</li>
+<li><p>UPDATE语句，NEW、OLD可以同时使用。</p>
+<pre><code>DELIMITER $$
+DROP TRIGGER IF EXISTS deleteTrigger;
+CREATE TRIGGER deleteTrigger AFTER DELETE ON user FOR EACH ROW
+    BEGIN
+    /*
+    DELETE 触发器在 DELETE 语句执行之前或之后执行。需要知道以下两点：
+    1.在 DELETE 触发器代码内，你可以引用一个名为 OLD 的虚拟表，访问被删除的行；
+    2.OLD 中的值全都是只读的，不能更新。下面的例子演示使用 OLD 保存将要被删除的行到一个存档表中：
+    */
+    IF OLD.id = 2 THEN
+        -- 触发器不能在监控增删改的时候再更改同一张表
+        INSERT INTO course(name, teacher, type) VALUES (&quot;自然&quot;, &quot;王小英&quot;, 1);
+    END IF;
+    END $$
+DELIMITER ;
+
+DELETE FROM user WHERE id = 2;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySql/" rel="tag"># MySql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/29/DOS批处理入门/" rel="next" title="DOS批处理入门">
+                <i class="fa fa-chevron-left"></i> DOS批处理入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/31/Kotlin基础语法/" rel="prev" title="Kotlin基础语法">
+                Kotlin基础语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">人生没有白走的路，每一步都作数 ：）</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是触发器"><span class="nav-number">1.</span> <span class="nav-text">什么是触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触发器的定义"><span class="nav-number">2.</span> <span class="nav-text">触发器的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触发器中的BEFORE-和-AFTER"><span class="nav-number">3.</span> <span class="nav-text">触发器中的BEFORE 和 AFTER</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#触发器中的NEW-和-OLD"><span class="nav-number">4.</span> <span class="nav-text">触发器中的NEW 和 OLD</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

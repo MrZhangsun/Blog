@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言：&amp;emsp;&amp;emsp;上海百联大宗内部员工培训系统是为了给内部员工提供一个高素质培训平台，也是百联研发部新技术实验平台。该系统前期采用的是Vertx作为系统框架，以Kotlin作为开发语言，以Vue作为前台框架。将来还会有更多的新技术应用于该平台。作为平台的开发人员，为了满足开发的需求，所以学习了Kotlin, 现将基本语法整理出来供大家学习，同时也便于日后查看。 空类型用法：as : 类">
+<meta name="keywords" content="Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin基础语法">
+<meta property="og:url" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/index.html">
+<meta property="og:site_name" content="Stupid Murphy">
+<meta property="og:description" content="前言：&amp;emsp;&amp;emsp;上海百联大宗内部员工培训系统是为了给内部员工提供一个高素质培训平台，也是百联研发部新技术实验平台。该系统前期采用的是Vertx作为系统框架，以Kotlin作为开发语言，以Vue作为前台框架。将来还会有更多的新技术应用于该平台。作为平台的开发人员，为了满足开发的需求，所以学习了Kotlin, 现将基本语法整理出来供大家学习，同时也便于日后查看。 空类型用法：as : 类">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/1.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/2.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/3.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/4.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/5.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/6.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/7.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/8.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/9.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/10.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/11.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/12.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/13.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/14.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/15.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/16.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/17.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/18.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/19.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/20.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/21.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/22.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/23.png">
+<meta property="og:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/24.png">
+<meta property="og:updated_time" content="2018-01-31T06:08:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin基础语法">
+<meta name="twitter:description" content="前言：&amp;emsp;&amp;emsp;上海百联大宗内部员工培训系统是为了给内部员工提供一个高素质培训平台，也是百联研发部新技术实验平台。该系统前期采用的是Vertx作为系统框架，以Kotlin作为开发语言，以Vue作为前台框架。将来还会有更多的新技术应用于该平台。作为平台的开发人员，为了满足开发的需求，所以学习了Kotlin, 现将基本语法整理出来供大家学习，同时也便于日后查看。 空类型用法：as : 类">
+<meta name="twitter:image" content="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/Kotlin基础语法/1.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Stupid Murphy" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kotlin基础语法 | Stupid Murphy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stupid Murphy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Haha</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />Schedule</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />Sitemap</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangsun.site/2017/12/31/Kotlin基础语法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="人生没有白走的路，每一步都作数 ：）">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stupid Murphy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kotlin基础语法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-12-31 13:39:32" itemprop="dateCreated datePublished" datetime="2017-12-31T13:39:32+08:00">2017-12-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-01-31 14:08:36" itemprop="dateModified" datetime="2018-01-31T14:08:36+08:00">2018-01-31</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>前言：</strong><br>&emsp;&emsp;上海百联大宗内部员工培训系统是为了给内部员工提供一个高素质培训平台，也是百联研发部新技术实验平台。该系统前期采用的是Vertx作为系统框架，以Kotlin作为开发语言，以Vue作为前台框架。将来还会有更多的新技术应用于该平台。作为平台的开发人员，为了满足开发的需求，所以学习了Kotlin, 现将基本语法整理出来供大家学习，同时也便于日后查看。</p>
+<h4 id="空类型用法："><a href="#空类型用法：" class="headerlink" title="空类型用法："></a>空类型用法：</h4><p><img src="Kotlin基础语法/1.png" alt="Kotlin"><br>as : 类型转换关键字/包别名<br>安全类型转换:<br>智能类型转换: </p>
+<h4 id="区间"><a href="#区间" class="headerlink" title="区间:"></a>区间:</h4><p><img src="Kotlin基础语法/2.png" alt="Kotlin"></p>
+<h4 id="数组的使用方法"><a href="#数组的使用方法" class="headerlink" title="数组的使用方法"></a>数组的使用方法</h4><p><img src="Kotlin基础语法/3.png" alt="Kotlin"></p>
+<h4 id="基本数据类型的数组"><a href="#基本数据类型的数组" class="headerlink" title="基本数据类型的数组"></a>基本数据类型的数组</h4><p><img src="Kotlin基础语法/4.png" alt="Kotlin"></p>
+<h4 id="常量与变量"><a href="#常量与变量" class="headerlink" title="常量与变量"></a>常量与变量</h4><p><img src="Kotlin基础语法/5.png" alt="Kotlin"></p>
+<h4 id="Lamd表达式"><a href="#Lamd表达式" class="headerlink" title="Lamd表达式"></a>Lamd表达式</h4><p><img src="Kotlin基础语法/6.png" alt="Kotlin"></p>
+<h4 id="Lamd表达式参数传递"><a href="#Lamd表达式参数传递" class="headerlink" title="Lamd表达式参数传递"></a>Lamd表达式参数传递</h4><p><img src="Kotlin基础语法/7.png" alt="Kotlin"></p>
+<h4 id="成员变量和局部变量的定义和区别："><a href="#成员变量和局部变量的定义和区别：" class="headerlink" title="成员变量和局部变量的定义和区别："></a>成员变量和局部变量的定义和区别：</h4><p>成员变量都是用val或var修饰的，而没有被这两个关键字修饰的变量都是局部变量<br><img src="Kotlin基础语法/8.png" alt="Kotlin"></p>
+<h4 id="变量的初始化"><a href="#变量的初始化" class="headerlink" title="变量的初始化"></a>变量的初始化</h4><p><img src="Kotlin基础语法/9.png" alt="Kotlin"></p>
+<h4 id="成员变量的访问控制"><a href="#成员变量的访问控制" class="headerlink" title="成员变量的访问控制"></a>成员变量的访问控制</h4><p><img src="Kotlin基础语法/10.png" alt="Kotlin"></p>
+<h4 id="运算符的定义"><a href="#运算符的定义" class="headerlink" title="运算符的定义"></a>运算符的定义</h4><p><img src="Kotlin基础语法/11.png" alt="Kotlin"></p>
+<h4 id="Kotlin关键字："><a href="#Kotlin关键字：" class="headerlink" title="Kotlin关键字："></a>Kotlin关键字：</h4><p><strong>operator:</strong>定义运算符<br><strong>infix:</strong>定义中缀表达式<br><strong>override:</strong>重写父类方法<br><strong>constructor:</strong>构造器<br><strong>const:</strong>定义编译期常量<br><strong>val:</strong>定义普通成员常量<br><strong>var:</strong>定义成员变量</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li><p>在Kotlin中when，if语句和Lamda表达式一样具有返回值，返回值为最后一行的值</p>
+</li>
+<li><p>在Kotlin中默认的类和方法都是final的，要继承重写必须用关键字open，或者设置成abstract类型，重写方法必须使用override关键字</p>
+</li>
+</ol>
+<h4 id="if表达式"><a href="#if表达式" class="headerlink" title="if表达式"></a>if表达式</h4><p><img src="Kotlin基础语法/12.png" alt="Kotlin"></p>
+<h4 id="when、continue-和-break"><a href="#when、continue-和-break" class="headerlink" title="when、continue 和 break"></a>when、continue 和 break</h4><p>when表达式，Java中switch的替代品, 循环关键字continue和break<br><img src="Kotlin基础语法/13.png" alt="Kotlin"></p>
+<h4 id="具名参数"><a href="#具名参数" class="headerlink" title="具名参数"></a>具名参数</h4><p><img src="Kotlin基础语法/14.png" alt="Kotlin"></p>
+<h4 id="变长参数"><a href="#变长参数" class="headerlink" title="变长参数"></a>变长参数</h4><p><img src="Kotlin基础语法/15.png" alt="Kotlin"></p>
+<h4 id="Sperat-Operator"><a href="#Sperat-Operator" class="headerlink" title="Sperat Operator"></a>Sperat Operator</h4><p><img src="Kotlin基础语法/16.png" alt="Kotlin"></p>
+<h4 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h4><p><img src="Kotlin基础语法/17.png" alt="Kotlin"></p>
+<h4 id="继承和实现"><a href="#继承和实现" class="headerlink" title="继承和实现"></a>继承和实现</h4><p><img src="Kotlin基础语法/18.png" alt="Kotlin"><br><img src="Kotlin基础语法/19.png" alt="Kotlin"><br><img src="Kotlin基础语法/20.png" alt="Kotlin"><br><img src="Kotlin基础语法/21.png" alt="Kotlin"></p>
+<h4 id="object"><a href="#object" class="headerlink" title="object"></a>object</h4><p><img src="Kotlin基础语法/22.png" alt="Kotlin"></p>
+<h4 id="静态方法的定义"><a href="#静态方法的定义" class="headerlink" title="静态方法的定义"></a>静态方法的定义</h4><p><img src="Kotlin基础语法/23.png" alt="Kotlin"><br><img src="Kotlin基础语法/24.png" alt="Kotlin"></p>
+<p><strong>方法签名：</strong>这是一个JVM概念，虚拟机根据方法签名来判断方法的唯一性，从而会存在方法的重载。方法返回值不属于方法签名</p>
+<p>lamd表达式是一种匿名函数</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/30/MySql触发器/" rel="next" title="MySql触发器">
+                <i class="fa fa-chevron-left"></i> MySql触发器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/31/Nginx简介/" rel="prev" title="Nginx简介">
+                Nginx简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">人生没有白走的路，每一步都作数 ：）</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#空类型用法："><span class="nav-number">1.</span> <span class="nav-text">空类型用法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区间"><span class="nav-number">2.</span> <span class="nav-text">区间:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组的使用方法"><span class="nav-number">3.</span> <span class="nav-text">数组的使用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本数据类型的数组"><span class="nav-number">4.</span> <span class="nav-text">基本数据类型的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常量与变量"><span class="nav-number">5.</span> <span class="nav-text">常量与变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lamd表达式"><span class="nav-number">6.</span> <span class="nav-text">Lamd表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lamd表达式参数传递"><span class="nav-number">7.</span> <span class="nav-text">Lamd表达式参数传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#成员变量和局部变量的定义和区别："><span class="nav-number">8.</span> <span class="nav-text">成员变量和局部变量的定义和区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的初始化"><span class="nav-number">9.</span> <span class="nav-text">变量的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#成员变量的访问控制"><span class="nav-number">10.</span> <span class="nav-text">成员变量的访问控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符的定义"><span class="nav-number">11.</span> <span class="nav-text">运算符的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin关键字："><span class="nav-number">12.</span> <span class="nav-text">Kotlin关键字：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if表达式"><span class="nav-number">13.</span> <span class="nav-text">if表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#when、continue-和-break"><span class="nav-number">14.</span> <span class="nav-text">when、continue 和 break</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#具名参数"><span class="nav-number">15.</span> <span class="nav-text">具名参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变长参数"><span class="nav-number">16.</span> <span class="nav-text">变长参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sperat-Operator"><span class="nav-number">17.</span> <span class="nav-text">Sperat Operator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认参数"><span class="nav-number">18.</span> <span class="nav-text">默认参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#继承和实现"><span class="nav-number">19.</span> <span class="nav-text">继承和实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#object"><span class="nav-number">20.</span> <span class="nav-text">object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#静态方法的定义"><span class="nav-number">21.</span> <span class="nav-text">静态方法的定义</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

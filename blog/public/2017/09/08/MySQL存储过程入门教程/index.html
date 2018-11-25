@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] 什么是存储过程？存储过程是存储在MySQL数据库中的已经经过编译好的SQL指令集。 存储过程的特点： 因此执行时不需要数据库进行编译、优化就可以直接运行，相比直接执行SQL语句而言省去了编译和优化的环节，从而节省了系统的消耗。 触发器是在对数据库中数据进行增删改的时候触发执行的，是一个自动的过程。 存储过程能将对多个表的复杂操作封装到一起，结合MySQL事务进行执行。如果用程序来执行，">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL存储过程入门教程">
+<meta property="og:url" content="http://www.zhangsun.site/2017/09/08/MySQL存储过程入门教程/index.html">
+<meta property="og:site_name" content="Stupid Murphy">
+<meta property="og:description" content="[TOC] 什么是存储过程？存储过程是存储在MySQL数据库中的已经经过编译好的SQL指令集。 存储过程的特点： 因此执行时不需要数据库进行编译、优化就可以直接运行，相比直接执行SQL语句而言省去了编译和优化的环节，从而节省了系统的消耗。 触发器是在对数据库中数据进行增删改的时候触发执行的，是一个自动的过程。 存储过程能将对多个表的复杂操作封装到一起，结合MySQL事务进行执行。如果用程序来执行，">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-08T01:25:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL存储过程入门教程">
+<meta name="twitter:description" content="[TOC] 什么是存储过程？存储过程是存储在MySQL数据库中的已经经过编译好的SQL指令集。 存储过程的特点： 因此执行时不需要数据库进行编译、优化就可以直接运行，相比直接执行SQL语句而言省去了编译和优化的环节，从而节省了系统的消耗。 触发器是在对数据库中数据进行增删改的时候触发执行的，是一个自动的过程。 存储过程能将对多个表的复杂操作封装到一起，结合MySQL事务进行执行。如果用程序来执行，">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Stupid Murphy" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://www.zhangsun.site/2017/09/08/MySQL存储过程入门教程/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MySQL存储过程入门教程 | Stupid Murphy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stupid Murphy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Haha</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />Schedule</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />Sitemap</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangsun.site/2017/09/08/MySQL存储过程入门教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="人生没有白走的路，每一步都作数 ：）">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stupid Murphy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL存储过程入门教程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-09-08 09:06:21" itemprop="dateCreated datePublished" datetime="2017-09-08T09:06:21+08:00">2017-09-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-02-08 09:25:54" itemprop="dateModified" datetime="2018-02-08T09:25:54+08:00">2018-02-08</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h4 id="什么是存储过程？"><a href="#什么是存储过程？" class="headerlink" title="什么是存储过程？"></a>什么是存储过程？</h4><p>存储过程是存储在MySQL数据库中的已经经过编译好的SQL指令集。</p>
+<h4 id="存储过程的特点："><a href="#存储过程的特点：" class="headerlink" title="存储过程的特点："></a>存储过程的特点：</h4><ul>
+<li>因此执行时不需要数据库进行编译、优化就可以直接运行，相比直接执行SQL语句而言省去了编译和优化的环节，从而节省了系统的消耗。</li>
+<li>触发器是在对数据库中数据进行增删改的时候触发执行的，是一个自动的过程。</li>
+<li>存储过程能将对多个表的复杂操作封装到一起，结合MySQL事务进行执行。如果用程序来执行，那就变成了多次执行单条SQL语句，执行</li>
+<li>过程中不仅每次需要数据库进行编译、优化，而且需要多次连接数据库，十分消耗性能。</li>
+<li><p>存储过程能对数据库的访问权限进行细化。</p>
+<h4 id="什么情况下应该使用存储过程？"><a href="#什么情况下应该使用存储过程？" class="headerlink" title="什么情况下应该使用存储过程？"></a>什么情况下应该使用存储过程？</h4></li>
+<li><p>存储过程的使用要根据项目实际情况来决定。并非将所有的业务逻辑都封装成存储过程就好。因为存储过程的移植性差，不同的数据库对于存储过程的实现语法都存在差异。</p>
+</li>
+<li>不要将大量的运算放在存储过程中去，因为高并发下，多个用户访问，数据库的运算量会激增，导致数据库压力过大，不如将所有的计算放在web端。</li>
+<li>针对并发量大的web项目，不建议大量使用存储过程，原因如上。如果要是用，请控制存储过程的复杂程度，逻辑越简单越好。</li>
+</ul>
+<h4 id="定义一个存储过程"><a href="#定义一个存储过程" class="headerlink" title="定义一个存储过程"></a>定义一个存储过程</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS countRow;
+CREATE PROCEDURE countRow(OUT num INT)
+    BEGIN
+      SELECT COUNT(*) INTO num FROM mysql.user;
+    END $$
+
+DELIMITER ;
+-- 调用存储过程
+CALL countRow(@s);
+SELECT @s as num;
+</code></pre><h4 id="存储过程参数：IN-参数"><a href="#存储过程参数：IN-参数" class="headerlink" title="存储过程参数：IN 参数"></a>存储过程参数：IN 参数</h4><pre><code>-- IN 类型的参数表示在调用的时候需要传入实际值，该值的作用域仅限于存储过程内部，不会对外输出该值
+DELIMITER $$
+DROP PROCEDURE IF EXISTS paramIn;
+CREATE PROCEDURE paramIn(IN p_in INT)
+    BEGIN
+      SELECT p_in AS init_val;
+      SET p_in = 100;
+      SELECT p_in AS update_val;
+    END $$
+
+DELIMITER ;
+
+-- 定义一个用户变量
+SET @p_in = 11;
+-- 查询变量的初始值
+SELECT @p_in;
+-- 调用存储过程
+CALL paramIn(@p_in);
+-- 在此查看用户变量的值是否仍为11
+SELECT @p_in;
+</code></pre><h4 id="存储过程参数：OUT-参数"><a href="#存储过程参数：OUT-参数" class="headerlink" title="存储过程参数：OUT 参数"></a>存储过程参数：OUT 参数</h4><pre><code>-- OUT 类型的参数表示在调用的时候不能传入外部值，该值由存储过程在内部赋值之后返回给外部，可以在外部访问
+DELIMITER $$
+DROP PROCEDURE IF EXISTS paramOut;
+CREATE PROCEDURE paramOut(OUT p_out INT)
+    BEGIN
+    SELECT p_out AS init_val;
+#         SET p_out = 200;
+#         SELECT p_out AS update_val;
+    END $$
+DELIMITER ;
+
+-- 定义一个用户变量
+SET @p_out = 22;
+-- 查询变量的初始值
+SELECT @p_out;
+-- 调用存储过程
+CALL paramOut(@p_out);
+-- 在此查看用户变量的值是否已经变成200
+SELECT @p_out;
+</code></pre><h4 id="存储过程参数：INOUT-参数"><a href="#存储过程参数：INOUT-参数" class="headerlink" title="存储过程参数：INOUT 参数"></a>存储过程参数：INOUT 参数</h4><pre><code>-- NOUT 类型的参数表示在调用存储过程的时候可以接收外部传入的参数值，执行完后也能将新值传出
+DELIMITER $$
+DROP PROCEDURE IF EXISTS paramInout;
+CREATE PROCEDURE paramInout(INOUT p_inout INT)
+    BEGIN
+      SELECT p_inout AS init_val;
+      SET p_inout = 300;
+      SELECT p_inout AS update_val;
+    END $$
+
+DELIMITER ;
+
+-- 定义一个用户变量
+SET @p_inout = 33;
+-- 查询变量的初始值
+SELECT @p_inout;
+-- 调用存储过程
+CALL paramInout(@p_inout);
+-- 在此查看用户变量的值是否已经变成200
+SELECT @p_inout;
+</code></pre><h4 id="存储过程参数：不指定参数类型"><a href="#存储过程参数：不指定参数类型" class="headerlink" title="存储过程参数：不指定参数类型"></a>存储过程参数：不指定参数类型</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS paramDefault;
+CREATE PROCEDURE paramDefault(p_default INT)
+    BEGIN
+    SELECT p_default AS init_val;
+    SET p_default = 400;
+    SELECT p_default AS update_val;
+    END $$
+
+DELIMITER ;
+
+-- 定义一个用户变量
+SET @p_default = 44;
+-- 查询变量的初始值
+SELECT @p_default;
+-- 调用存储过程
+CALL paramDefault(@p_default);
+-- 在此查看用户变量的值是否仍是44
+SELECT @p_default;
+</code></pre><h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p>以存储过程为中心，IN 表示能将值传入到存储过程中，但是不能传出去； OUT 表示不能将值传入到存储过程中，但是能将值传出到外部；INOUT 表示能将值传入到存储过程中，执行完成后也能将值传出到外部；如果不指定参数类型，默认为 IN。</p>
+<h4 id="存储过程中变量的定义：使用-DECLARE-关键字"><a href="#存储过程中变量的定义：使用-DECLARE-关键字" class="headerlink" title="存储过程中变量的定义：使用 DECLARE 关键字"></a>存储过程中变量的定义：使用 DECLARE 关键字</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS variableDefine;
+CREATE PROCEDURE variableDefine()
+    BEGIN
+    -- 定义变量的格式：DECLARE 变量名 数据类型 （默认值可选）
+    DECLARE variableName VARCHAR(20) DEFAULT &quot;defaultName&quot;;
+
+    -- 变量赋值格式：SET 变量名 = 变量值
+    SET variableName = &quot;signedValue&quot;;
+
+    SELECT CONCAT(&quot;the new value is:&quot;, variableName) AS name;
+    END $$
+
+DELIMITER ;
+
+CALL variableDefine();
+</code></pre><h4 id="存储过程中的变量作用域：详见IN、-OUT、-INOUT"><a href="#存储过程中的变量作用域：详见IN、-OUT、-INOUT" class="headerlink" title="存储过程中的变量作用域：详见IN、 OUT、 INOUT"></a>存储过程中的变量作用域：详见IN、 OUT、 INOUT</h4><h4 id="存储过程中的条件语句：IF-–-ELSEIF-–-ELSE-–-END-IF"><a href="#存储过程中的条件语句：IF-–-ELSEIF-–-ELSE-–-END-IF" class="headerlink" title="存储过程中的条件语句：IF – ELSEIF – ELSE – END IF"></a>存储过程中的条件语句：IF – ELSEIF – ELSE – END IF</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS conditional1;
+CREATE PROCEDURE conditional1(IN input INT)
+    BEGIN
+    IF input BETWEEN 0 AND 60 THEN
+        SELECT &quot;L&quot; AS GRADE;
+    ELSEIF input BETWEEN 60 AND 80 THEN
+        SELECT &quot;M&quot; AS GRADE;
+    ELSEIF input BETWEEN 80 AND 100 THEN
+        SELECT &quot;H&quot; AS GRADE;
+    ELSE
+        SELECT &quot;Error&quot; AS Warning;
+    END IF;
+    END $$
+DELIMITER ;
+
+SET @input = 90;
+CALL conditional(@input);
+</code></pre><h4 id="存储过程中的条件语句：CASE-–-WHEN-THEN"><a href="#存储过程中的条件语句：CASE-–-WHEN-THEN" class="headerlink" title="存储过程中的条件语句：CASE – WHEN THEN"></a>存储过程中的条件语句：CASE – WHEN THEN</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS conditional2;
+CREATE PROCEDURE conditional2(IN case_val INT)
+    BEGIN
+    CASE case_val
+        WHEN 20 THEN
+            SELECT &quot;L&quot; AS GRADE;
+        WHEN 30 THEN
+            SELECT &quot;M&quot; AS GRADE;
+        WHEN 40 THEN
+            SELECT &quot;H&quot; AS GRADE;
+        ELSE
+            SELECT &quot;ERROR&quot; AS Warning;
+    END CASE ;
+    END $$
+
+DELIMITER ;
+
+SET @case_val = 30;
+CALL conditional2(@case_val);
+</code></pre><h4 id="存储过程中的循环语句-先判断后执行-：WHILE-DO-–-END-WHILE"><a href="#存储过程中的循环语句-先判断后执行-：WHILE-DO-–-END-WHILE" class="headerlink" title="存储过程中的循环语句(先判断后执行)：WHILE DO – END WHILE"></a>存储过程中的循环语句(先判断后执行)：WHILE DO – END WHILE</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS loop1;
+CREATE PROCEDURE loop1(IN loop_val INT)
+    BEGIN
+    WHILE loop_val &gt; 10 DO
+        -- doing something
+    END WHILE;
+    END $$
+DELIMITER ;
+</code></pre><h4 id="存储过程中的循环语句-先执行后判断-：REPEAT-–-UNTIL-–-END-REPEAT"><a href="#存储过程中的循环语句-先执行后判断-：REPEAT-–-UNTIL-–-END-REPEAT" class="headerlink" title="存储过程中的循环语句(先执行后判断)：REPEAT – UNTIL – END REPEAT"></a>存储过程中的循环语句(先执行后判断)：REPEAT – UNTIL – END REPEAT</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS loop1;
+CREATE PROCEDURE loop1(IN loop_val INT)
+    BEGIN
+    REPEAT
+        -- doing something
+        UNTIL  loop_val &gt; 10
+    END REPEAT;
+    END $$
+DELIMITER ;
+</code></pre><h4 id="存储过程中的循环语句：LOOP-–-LEAVE-–-END-LOOP"><a href="#存储过程中的循环语句：LOOP-–-LEAVE-–-END-LOOP" class="headerlink" title="存储过程中的循环语句：LOOP – LEAVE – END LOOP"></a>存储过程中的循环语句：LOOP – LEAVE – END LOOP</h4><pre><code>DELIMITER $$
+DROP PROCEDURE IF EXISTS loop1;
+CREATE PROCEDURE loop1(IN loop_val INT)
+    BEGIN
+    label:LOOP
+        if loop_val &gt; 10 THEN
+            -- 跳出循环
+            LEAVE label;
+        ELSEIF loop_val &gt; 20 THEN
+            -- 跳出本次循环执行下一次循环
+            ITERATE label;
+        END IF;
+    END LOOP;
+    END $$
+DELIMITER ;
+</code></pre><h4 id="查看存储过程的状态："><a href="#查看存储过程的状态：" class="headerlink" title="查看存储过程的状态："></a>查看存储过程的状态：</h4><pre><code>SHOW PROCEDURE STATUS LIKE &apos;conditional1&apos;;
+
+SHOW PROCEDURE STATUS LIKE &apos;conditional%&apos;;
+</code></pre><h4 id="查看存储过程定义相关信息"><a href="#查看存储过程定义相关信息" class="headerlink" title="查看存储过程定义相关信息"></a>查看存储过程定义相关信息</h4><pre><code>SHOW CREATE PROCEDURE conditional1;
+</code></pre><h4 id="修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）："><a href="#修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）：" class="headerlink" title="修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）："></a>修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）：</h4><pre><code>ALTER PROCEDURE conditional1 SQL SECURITY DEFINER ; -- 修改存储过程的调用者（INVOKER \ DEFINER）
+</code></pre><h4 id="删除存储过程"><a href="#删除存储过程" class="headerlink" title="删除存储过程"></a>删除存储过程</h4><pre><code>DROP PROCEDURE conditional1;
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySql/" rel="tag"># MySql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/09/购物车模型/" rel="next" title="购物车模型">
+                <i class="fa fa-chevron-left"></i> 购物车模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/13/MySql系统架构简介/" rel="prev" title="MySql系统架构简介">
+                MySql系统架构简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">人生没有白走的路，每一步都作数 ：）</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是存储过程？"><span class="nav-number">1.</span> <span class="nav-text">什么是存储过程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程的特点："><span class="nav-number">2.</span> <span class="nav-text">存储过程的特点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么情况下应该使用存储过程？"><span class="nav-number">3.</span> <span class="nav-text">什么情况下应该使用存储过程？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义一个存储过程"><span class="nav-number">4.</span> <span class="nav-text">定义一个存储过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程参数：IN-参数"><span class="nav-number">5.</span> <span class="nav-text">存储过程参数：IN 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程参数：OUT-参数"><span class="nav-number">6.</span> <span class="nav-text">存储过程参数：OUT 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程参数：INOUT-参数"><span class="nav-number">7.</span> <span class="nav-text">存储过程参数：INOUT 参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程参数：不指定参数类型"><span class="nav-number">8.</span> <span class="nav-text">存储过程参数：不指定参数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结："><span class="nav-number">9.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中变量的定义：使用-DECLARE-关键字"><span class="nav-number">10.</span> <span class="nav-text">存储过程中变量的定义：使用 DECLARE 关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的变量作用域：详见IN、-OUT、-INOUT"><span class="nav-number">11.</span> <span class="nav-text">存储过程中的变量作用域：详见IN、 OUT、 INOUT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的条件语句：IF-–-ELSEIF-–-ELSE-–-END-IF"><span class="nav-number">12.</span> <span class="nav-text">存储过程中的条件语句：IF – ELSEIF – ELSE – END IF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的条件语句：CASE-–-WHEN-THEN"><span class="nav-number">13.</span> <span class="nav-text">存储过程中的条件语句：CASE – WHEN THEN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的循环语句-先判断后执行-：WHILE-DO-–-END-WHILE"><span class="nav-number">14.</span> <span class="nav-text">存储过程中的循环语句(先判断后执行)：WHILE DO – END WHILE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的循环语句-先执行后判断-：REPEAT-–-UNTIL-–-END-REPEAT"><span class="nav-number">15.</span> <span class="nav-text">存储过程中的循环语句(先执行后判断)：REPEAT – UNTIL – END REPEAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储过程中的循环语句：LOOP-–-LEAVE-–-END-LOOP"><span class="nav-number">16.</span> <span class="nav-text">存储过程中的循环语句：LOOP – LEAVE – END LOOP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看存储过程的状态："><span class="nav-number">17.</span> <span class="nav-text">查看存储过程的状态：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看存储过程定义相关信息"><span class="nav-number">18.</span> <span class="nav-text">查看存储过程定义相关信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）："><span class="nav-number">19.</span> <span class="nav-text">修改存储过程的特征参数（MySQL中不支持修改存储过程的内容）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除存储过程"><span class="nav-number">20.</span> <span class="nav-text">删除存储过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="[TOC] JavaSE多线程IO流反射集合java基础面试 前台框架JavaScript 闭包  闭包是JavaScript中的一种语法现象，指的是在函数的内部定义了子函数，并且子函数访问了父函数中的成员变量。定义一个闭包现象如下： fout = function(){     var v1 = 10;     fin = function(){         var v2 = v1;">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试知识点总结">
+<meta property="og:url" content="http://www.zhangsun.site/2018/02/01/Java面试知识点总结/index.html">
+<meta property="og:site_name" content="Stupid Murphy">
+<meta property="og:description" content="[TOC] JavaSE多线程IO流反射集合java基础面试 前台框架JavaScript 闭包  闭包是JavaScript中的一种语法现象，指的是在函数的内部定义了子函数，并且子函数访问了父函数中的成员变量。定义一个闭包现象如下： fout = function(){     var v1 = 10;     fin = function(){         var v2 = v1;">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-24T07:16:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java面试知识点总结">
+<meta name="twitter:description" content="[TOC] JavaSE多线程IO流反射集合java基础面试 前台框架JavaScript 闭包  闭包是JavaScript中的一种语法现象，指的是在函数的内部定义了子函数，并且子函数访问了父函数中的成员变量。定义一个闭包现象如下： fout = function(){     var v1 = 10;     fin = function(){         var v2 = v1;">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Stupid Murphy" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="http://www.zhangsun.site/2018/02/01/Java面试知识点总结/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java面试知识点总结 | Stupid Murphy</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stupid Murphy</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Haha</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/schedule/" rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />Schedule</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />Sitemap</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zhangsun.site/2018/02/01/Java面试知识点总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Murphy">
+      <meta itemprop="description" content="人生没有白走的路，每一步都作数 ：）">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stupid Murphy">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java面试知识点总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-01 14:22:30" itemprop="dateCreated datePublished" datetime="2018-02-01T14:22:30+08:00">2018-02-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-02-24 15:16:40" itemprop="dateModified" datetime="2018-02-24T15:16:40+08:00">2018-02-24</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h3 id="JavaSE"><a href="#JavaSE" class="headerlink" title="JavaSE"></a>JavaSE</h3><h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><h4 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h4><h4 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h4><h4 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h4><p><a href="http://www.cnblogs.com/wang-meng/p/5701918.html" target="_blank" rel="noopener">java基础面试</a></p>
+<h3 id="前台框架"><a href="#前台框架" class="headerlink" title="前台框架"></a>前台框架</h3><h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><ol>
+<li><p><strong>闭包</strong></p>
+<p> 闭包是JavaScript中的一种语法现象，指的是在函数的内部定义了子函数，并且子函数访问了父函数中的成员变量。定义一个闭包现象如下：</p>
+<pre><code>fout = function(){
+    var v1 = 10;
+    fin = function(){
+        var v2 = v1;
+        return v2;
+    }
+    return fin;
+}
+
+var out = fout() //  fin()
+var in = out() //  10
+</code></pre><p> 通过闭包中的子函数可以访问到父函数中的成员变量但是外部的父函数却不能访问子函数中的成员变量，这就是Javascript语言特有的”链式作用域”结构（chain scope），子对象会一级一级地向上寻找所有父对象的变量。所以，父对象的所有变量，对子对象都是可见的，反之则不成立。</p>
+<p> 既然fin可以读取fout中的局部变量，那么只要把fin作为返回值，我们不就可以在fout外部读取它的内部变量了吗！</p>
+</li>
+</ol>
+<ol start="2">
+<li><p><strong>JavaScript 中 undefined 和 not defined 的区别:</strong><br>undefined是javaScript中的一种原始数据类型，表示没有初始化的变量或者函数的初始化值。如果一个变量或者函数只定义了，而没有初始化，则用typeof会返回一个undefined。</p>
+<pre><code>var val;
+alert(typeof val) // undefined
+</code></pre><p>not defined是一种错误提示消息，表示变量没有定义过就使用了，如下：</p>
+<pre><code>var val = x; // x会报错: Unresolved variable or type x
+</code></pre></li>
+<li><p><strong>全局对象</strong><br> JavaScript的全局对象是指，该语言中的内置对象，这些对象可以在javaScript代码的任何位置不用声明就可以直接使用，类似Java中的基本类型数据。<br> 常用到的全局对象有：</p>
+<pre><code>eval(String)：接受一个字符串参数，用于执行字符串代码。
+typeof： 返回一个变量的数据类型。
+Number() ：把对象的值转换为数字。
+String()： 把对象的值转换为字串。
+parseInt(String)：解析一个字符串并返回一个整数。
+parseFloat(String)：解析一个字符串并返回一个浮点数。
+decodeURI()：解码某个编码的 URI。
+decodeURIComponent()：解码一个编码的 URI 组件。
+encodeURI()：把字符串编码为 URI。
+</code></pre><p> 下面面试题输出的结果是甚末？</p>
+<pre><code>var y = 1;
+if (function f(){}) {
+    y += typeof f;
+}
+console.log(y);
+</code></pre><p> 输出结果：1undefined</p>
+</li>
+<li><p><strong>怎么判断一个object是否是数组(array)？</strong></p>
+<pre><code>object.__proto__ === Array.prototype; // 利用原型链
+
+$.isArray(object) // 利用jQuery
+</code></pre></li>
+<li><p><strong>JavaScript怎么清空数组？</strong></p>
+<pre><code>var arr = [1, 2, 3, 4, 5];
+arr = []; // 方法一
+arr.length = 0; // 方法二 
+</code></pre></li>
+<li><p><strong>JavaScript中自执行匿名函数</strong>    </p>
+<p> 自执行匿名函数定义：<br> 常见格式：(function() { /<em> code </em>/ })();<br> 解释：包围函数（function(){})的第一对括号向脚本返回未命名的函数，随后一对空括号立即执行返回的未命名函数，括号内为匿名函数的参数。<br> 作用：可以用它创建命名空间，只要把自己所有的代码都写在这个特殊的函数包装内，那么外部就不能访问，除非你允许(变量前加上window，这样该函数或变量就成为全局)。各JavaScript库的代码也基本是这种组织形式。</p>
+<p> 总结一下，执行函数的作用主要为 匿名 和 自动执行,代码在被解释时就已经在运行了。</p>
+<p> 下面代码输出的结果是甚末？</p>
+<pre><code>var output = (function(x){
+    delete x;
+    return x;
+})(0);
+console.log(output);
+</code></pre><p>输出是 0。 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/delete" target="_blank" rel="noopener">delete</a> 操作符是将object的属性删去的操作。但是这里的 x 是并不是对象的属性， delete 操作符并不能作用。</p>
+</li>
+<li><p><strong>什么是 undefined x 1 ？</strong><br> 在chrome下执行如下代码，我们就可以看到undefined x 1的身影。</p>
+<pre><code>var trees = [&quot;redwood&quot;,&quot;bay&quot;,&quot;cedar&quot;,&quot;oak&quot;,&quot;maple&quot;];
+delete trees[3];
+console.log(trees);
+</code></pre><p> 当我们使用 delete 操作符删除一个数组中的元素，这个元素的位置就会变成一个占位符。打印出来就是undefined x 1。<br> 注意如果我们使用trees[3] === ‘undefined × 1’返回的是 false。因为它仅仅是一种打印表示，并不是值变为undefined x 1。</p>
+</li>
+<li><p><strong>下面代码输出什么？</strong></p>
+<pre><code>var bar = true;
+console.log(bar + 0);   
+console.log(bar + &quot;xyz&quot;);  
+console.log(bar + true);  
+console.log(bar + false);   
+</code></pre><p> 输出是:<br> 1<br> truexyz<br> 2<br> 1</p>
+<p> 下面给出一个加法操作表:<br> Number + Number -&gt; 加法<br> Boolean + Number -&gt; 加法<br> Boolean + Boolean -&gt; 加法<br> Number + String -&gt; 连接<br> String + Boolean -&gt; 连接<br> String + String -&gt; 连接</p>
+</li>
+<li><p><strong>两种函数声明有什么区别？</strong></p>
+<pre><code>var foo = function(){ 
+    // Some code
+}; 
+function bar(){ 
+    // Some code
+}; 
+</code></pre><p> 第一种函数定义是在运行时；第二种定义实在解析时，存在变量提升。看看如下代码的运行结果：</p>
+<pre><code>console.log(foo)
+console.log(bar)
+
+var foo = function(){ 
+    // Some code
+}; 
+function bar(){ 
+    // Some code
+}; 
+</code></pre><p> 结果是：</p>
+<pre><code>undefined
+function bar(){ 
+    // Some code
+};
+</code></pre><p> 第二种方式JavaScript在执行时，会将变量提升。</p>
+</li>
+<li><p><a href="http://www.runoob.com/js/js-hoisting.html" target="_blank" rel="noopener"><strong>JavaScript 变量提升</strong></a><br>JavaScript 中，函数及变量的声明都将被提升到函数的最顶部。<br>JavaScript 中，变量可以在使用后声明，也就是变量可以先使用再声明。</p>
+</li>
+<li><p><strong>内存泄漏</strong><br>内存泄露是指变量使用完之后没有被销毁，一直常驻内存，无法被垃圾回收器回收导致的内存浪费，严重的时候会导致内存溢出。引发内存泄露的原因通常是因为不规范编码造成的。一般有一下几种现象：<br>全局变量引起的内存泄漏：</p>
+<pre><code>function leaks(){  
+    leak = 11; // leak 成为一个全局变量，方法执行完成之后，不会被回收
+}
+</code></pre><p>闭包引起的内存泄漏：</p>
+<pre><code>function leaks(){
+    let leak = 11; // 被闭包所引用，不会被回收
+    function fin() {
+        console.log(leak); 
+    }
+    return fin();
+}
+</code></pre><p>事件未清除导致的内存泄漏</p>
+</li>
+</ol>
+<h4 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h4><ol>
+<li><p><strong>Ajax</strong><br> 简述ajax 的过程。</p>
+<ul>
+<li>创建XMLHttpRequest对象,也就是创建一个异步调用对象</li>
+<li>创建一个新的HTTP请求,并指定该HTTP请求的方法、URL及验证信息</li>
+<li>设置响应HTTP请求状态变化的函数</li>
+<li>发送HTTP请求</li>
+<li>获取异步调用返回的数据</li>
+<li>使用JavaScript和DOM实现局部刷新</li>
+</ul>
+</li>
+</ol>
+<p>同步和异步的区别?<br>syn<br>如何解决跨域问题?</p>
+<p>JavaScript 的同源策略</p>
+<pre><code>同源策略是客户端脚本（尤其是Javascript）的重要的安全度量标准。它最早出自Netscape Navigator2.0，其目的是防止某个文档或脚本从多个不同源装载。所谓同源指的是：协议，域名，端口相同，同源策略是一种安全协议，指一段脚本只能读取来自同一来源的窗口和文档的属性。
+</code></pre><p>解释jsonp的原理，以及为什么不是真正的ajax</p>
+<pre><code>Jsonp并不是一种数据格式，而json是一种数据格式，jsonp是用来解决跨域获取数据的一种解决方案，具体是通过动态创建script标签，然后通过标签的src属性获取js文件中的js脚本，该脚本的内容是一个函数调用，参数就是服务器返回的数据，为了处理这些返回的数据，需要事先在页面定义好回调函数，本质上使用的并不是ajax技术
+</code></pre><h4 id="React"><a href="#React" class="headerlink" title="React"></a>React</h4><ol>
+<li><p><strong>简介</strong></p>
+<p> React是Facebook2013年开源的一个JavaScript项目，是用来构建UI界面的，相当于MVC模型中View层。React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。</p>
+</li>
+<li><p><strong>React主要的原理</strong></p>
+<p> 传统的web应用，操作DOM一般是直接更新操作的，但是我们知道DOM更新通常是比较昂贵的。而React为了尽可能减少对DOM的操作，提供了一种不同的而又强大的方式来更新DOM，代替直接的DOM操作。就是Virtual DOM,一个轻量级的虚拟的DOM，就是React抽象出来的一个对象，描述dom应该什么样子的，应该如何呈现。通过这个Virtual DOM去更新真实的DOM，由这个Virtual DOM管理真实DOM的更新。</p>
+<p> 为什么通过这多一层的Virtual DOM操作就能更快呢？ 这是因为React有个diff算法，更新Virtual DOM并不保证马上影响真实的DOM，React会等到事件循环结束，然后利用这个diff算法，通过当前新的dom表述与之前的作比较，计算出最小的步骤更新真实的DOM。</p>
+</li>
+<li><p><strong>特点：</strong></p>
+<ul>
+<li>不直接操作DOM对象，而是通过虚拟DOM通过diff算法以最小的步骤作用到真实的DOM上；</li>
+<li>组件化开发，代码的复用性高；</li>
+<li>异步更新页面，不用刷新整个页面；</li>
+</ul>
+</li>
+<li><p><strong>state, props, refs, keys的作用：</strong></p>
+<ul>
+<li><p>state: 是React中组件的一个对象。React把用户界面当做是状态机，想象它有不同的状态然后渲染这些状态,可以轻松让用户界面与数据保持一致。 React中,更新组件的state,会导致重新渲染用户界面(不要操作DOM).简单来说,就是用户界面会随着state变化而变化。调用setState(data,callback)这个方法会合并、更新data到this.state，并重新渲染组件。渲染完成后，调用可选的callback回调。大部分情况不需要提供callback，因为React会负责吧界面更新到最新状态。</p>
+</li>
+<li><p>props: 用来从父级组件向子集组件传递参数的容器。React 里，数据通过props 从拥有者流向归属者。</p>
+</li>
+<li><p>ref: 是React中的一个特殊属性，这个属性用在render()方法返回的组件上，用来标记组件，以便于获取到该组件的实例。<br>ref的形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input ref=&quot;myInput&quot; /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>   要想访问这个实例，可以通过this.refs来访问：
+
+       this.refs.myInput
+
+- key: 它是一个特殊的属性，它是出现不是给开发者用的（例如你为一个组件设置key之后不能获取组件的这个key props），而是给react自己用的。react利用key来识别组件，它是一种身份标识标识，就像我们的身份证用来辨识一个人一样。每个key对应一个组件，相同的key react认为是同一个组件，这样后续相同的key对应组件都不会被创建。
+key值的唯一是有范围的，即在数组生成的同级同类型的组件上要保持唯一，而不是所有组件的key都要保持唯一。不仅仅在数组生成组件上，其他地方也可以使用key，主要是react利用key来区分组件的，相同的key表示同一个组件，react不会重新销毁创建组件实例，只可能更新；key不同，react会销毁已有的组件实例，重新创建组件新的实例。
+</code></pre><ol start="5">
+<li><p><strong>定义一个组件：</strong></p>
+<pre><code>import React from &quot;react&quot;;
+import {Row,Col} from &quot;antd&quot;;
+import &quot;antd/dist/antd.css&quot;;
+
+export default class PCFooter extends React.Component{
+    render(){
+
+        return(
+            &lt;footer className={&quot;footer&quot;}&gt;
+            &lt;Row&gt;
+                &lt;Col span={2}&gt;&lt;/Col&gt;
+                &lt;Col span={20}&gt;
+                &lt;p&gt;&amp;copy;&amp;nbsp;2017-2050 ReactNews CopyRight Reserved.&lt;/p&gt;
+                &lt;/Col&gt;
+                &lt;Col span={2}&gt;&lt;/Col&gt;
+            &lt;/Row&gt;
+            &lt;/footer&gt;
+        );
+    };
+}
+</code></pre></li>
+<li><p><strong>AntD</strong><br> Ant Design是蚂蚁金服开发的一款前端UI框架，可以帮助开发者快速搭建漂亮的页面，即使你是一个不懂设计的开发者，也能快速地写出比较好看的前端页面。从而提高了页面的开发效率。与React结合开发前端页面效果不错。</p>
+</li>
+<li><p><strong>开发流程</strong></p>
+<ul>
+<li>导入需要的模块；</li>
+<li>定义一个组件，继承React.Component，用到关键字export, default, class, extends</li>
+<li>编写构造器（可选，用于初始化参数）;</li>
+<li>编写render()方法，用于渲染组件；</li>
+<li>编写render()方法中的return()方法，返回组件；</li>
+<li>在其他组件中导入编写的组件，用props进行参数传递。</li>
+</ul>
+</li>
+<li><p><strong>NodeJS</strong></p>
+<p> 简单的说 Node.js 就是运行在服务端的 JavaScript。自从前后端开发分离之后，前端代码从后段代码中剥离出来了，搭建独立的前端服务器，Node.JS就是前端项目服务器, 类似Tomcat、Apache、Nginx。<br> Node.Js采用NPM对前端项目中的依赖JS包进行管理，在新版本中NPM已经包含在了Node.js中，用户只需要安装Node即可，不需要额外安装NPM。</p>
+<p> 接下来我们使用 http.createServer() 方法创建服务器，并使用 listen 方法绑定 8888 端口。 函数通过 request, response 参数来接收和响应数据。</p>
+</li>
+</ol>
+<p>实例如下，在你项目的根目录下创建一个叫 server.js 的文件，并写入以下代码：</p>
+<pre><code>var http = require(&apos;http&apos;);
+
+http.createServer(function (request, response) {
+
+    // 发送 HTTP 头部 
+    // HTTP 状态值: 200 : OK
+    // 内容类型: text/plain
+    response.writeHead(200, {&apos;Content-Type&apos;: &apos;text/plain&apos;});
+
+    // 发送响应数据 &quot;Hello World&quot;
+    response.end(&apos;Hello World\n&apos;);
+}).listen(8888);
+
+// 终端打印如下信息
+console.log(&apos;Server running at http://127.0.0.1:8888/&apos;);
+以上代码我们完成了一个可以工作的 HTTP 服务器。
+
+使用 node 命令执行以上的代码：
+
+node server.js
+Server running at http://127.0.0.1:8888/
+</code></pre><ol start="9">
+<li><p><strong>NPM</strong></p>
+<ul>
+<li>npm init：会引导你创建一个package.json文件，包括名称、版本、作者这些信息等</li>
+<li>npm install moduleNames：安装Node模块</li>
+<li>npm install <name> -g： 将包安装到全局环境中</name></li>
+<li>npm install <name> –save： 安装的同时，将信息写入package.json中项目路径中（如果有package.json文件时，直接使用npm install方法就可以根据dependencies配置安装所有的依赖包，这样代码提交到github时，就不用提交node_modules这个文件夹了）。</name></li>
+<li>npm uninstall moudleName：卸载node模块</li>
+<li>npm update moduleName：更新node模块</li>
+<li>npm list：查看当前目录下已安装的node包</li>
+<li>npm -v：查看npm安装的版本</li>
+</ul>
+</li>
+</ol>
+<h3 id="后台框架"><a href="#后台框架" class="headerlink" title="后台框架"></a>后台框架</h3><h4 id="SpringMvc"><a href="#SpringMvc" class="headerlink" title="SpringMvc"></a>SpringMvc</h4><ol>
+<li><p>SpringMVC的工作流程？</p>
+<ul>
+<li>客户端发起请求到DispatcherServlet(前端控制器)；</li>
+<li><p>调用HandlerMapping(处理器映射器)，根据请求中的url到xml配置或注解(@RequestMapping)中去进行查找对应的Handler(处理器)；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;/url&quot; class=&quot;com.example.controller.Controller&quot;&gt;&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HandlerMapping 生成HandlerIntercepter(处理器拦截器)，将其和Handler一并返回给前端控制器；</p>
+</li>
+</ul>
+</li>
+<li><p>SpringMVC和Struts2的区别：</p>
+</li>
+<li><h4 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h4><h4 id="Mybatis"><a href="#Mybatis" class="headerlink" title="Mybatis"></a>Mybatis</h4><h4 id="Struts2"><a href="#Struts2" class="headerlink" title="Struts2"></a>Struts2</h4><h4 id="Hibernate"><a href="#Hibernate" class="headerlink" title="Hibernate"></a>Hibernate</h4><h4 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h4></li>
+</ol>
+<h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><h4 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h4><h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><ol>
+<li>简介</li>
+<li>Http服务器</li>
+<li>负载均衡服务器<br><a href="http://www.cnblogs.com/wang-meng/p/5861174.html#3896182" target="_blank" rel="noopener">Nginx负载均衡的详细配置及使用案例详解.</a></li>
+<li>反向代理服务器</li>
+</ol>
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><h4 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h4><ol>
+<li><strong>Sql优化</strong></li>
+<li><strong>锁</strong><br> 死锁<br> 锁策略<br> 锁粒度<pre><code>表级锁
+行级锁
+</code></pre></li>
+<li><strong>事务</strong><br> 原子性<br> 一致性<br> 持久性<br> 隔离性<pre><code>脏读
+不可重复读
+虚度/幻读
+序列化
+</code></pre><h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4></li>
+<li><strong>数据类型</strong><br>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</li>
+<li><p><strong>Jedis</strong></p>
+</li>
+<li><p><strong>Redis与</strong></p>
+</li>
+<li><p><strong>Redis的应用场景</strong></p>
+<ul>
+<li>缓存<br>  Redis读写速度每秒在10万次左右，可以对查询频繁的数据进行缓存，能实现高效的查询。</li>
+<li>技术器<br>  使用INCREABY和DECREABY可以实现计数器</li>
+<li>分布式锁与单线程<br>  Redis是单线程的所以可以控制多线程并发访问资源的问题</li>
+<li>计时器<br>  Redis新版本推出了key过期事件，可以通过订阅指定的key事件来实现定时任务，但这是新版本的特性。<h4 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h4></li>
+</ul>
+</li>
+<li><strong>数据类型</strong></li>
+<li><strong>JavaAPI</strong><h3 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h3><h4 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h4>Dubbo是阿里开源的一款微服务框架，可以与Spring整合实现分布式应用之间服务的管理。<br>Dubbo四个组件组成：</li>
+</ol>
+<ul>
+<li>生产者：服务的提供者；</li>
+<li>消费者：服务的订阅者；</li>
+<li>注册中心：用于服务的发布和订阅；<br>  通常使用Zookeeper作为注册中心，因为Zookeeper可以通过节点进行订阅和发布数据。</li>
+<li>监控中心：用于服务的监控和管理。<h4 id="ActiveMQ"><a href="#ActiveMQ" class="headerlink" title="ActiveMQ"></a>ActiveMQ</h4></li>
+</ul>
+<h4 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h4><pre><code>- Zookeeper最初时应用在大数据中的，被用于分布式系统中用于维护分布式应用配置的一致性。
+- 作为Dubbo的注册中心
+- 作为项目的配置中心
+首先动态加载相关bean，如果配置中心发生改变，对应的watcher监听到事件后，客户端则对相关bean进行重新注册，并且从配置中心获取到了最新数据，然后客户端直接调用getBean()方法获取相关bean实例，确保不再是之前引用。
+</code></pre><h4 id="Freemarker"><a href="#Freemarker" class="headerlink" title="Freemarker"></a>Freemarker</h4><h4 id="SwaggerAPI"><a href="#SwaggerAPI" class="headerlink" title="SwaggerAPI"></a>SwaggerAPI</h4><h4 id="Solr"><a href="#Solr" class="headerlink" title="Solr"></a>Solr</h4><h4 id="FastDFS"><a href="#FastDFS" class="headerlink" title="FastDFS"></a>FastDFS</h4><h4 id="定时任务框架"><a href="#定时任务框架" class="headerlink" title="定时任务框架"></a>定时任务框架</h4><ol>
+<li><strong>JDK</strong></li>
+<li><strong>Spring-Task</strong></li>
+<li><strong>Quartz</strong></li>
+<li><a href="http://blog.csdn.net/fanfan_v5/article/details/61310045" target="_blank" rel="noopener"><strong>Elestic Job</strong></a></li>
+<li><strong>Zookeeper</strong></li>
+</ol>
+<h4 id="WebService（CXF）"><a href="#WebService（CXF）" class="headerlink" title="WebService（CXF）"></a>WebService（CXF）</h4><h4 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h4><h3 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h3><h4 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h4><h4 id="PostMan"><a href="#PostMan" class="headerlink" title="PostMan"></a>PostMan</h4><h4 id="Charles"><a href="#Charles" class="headerlink" title="Charles"></a>Charles</h4><h4 id="Datagrid"><a href="#Datagrid" class="headerlink" title="Datagrid"></a>Datagrid</h4><h4 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h4><h4 id="GIT"><a href="#GIT" class="headerlink" title="GIT"></a>GIT</h4><h3 id="加分项"><a href="#加分项" class="headerlink" title="加分项"></a>加分项</h3><h4 id="Kotlin"><a href="#Kotlin" class="headerlink" title="Kotlin"></a>Kotlin</h4><ul>
+<li>防止空指针</li>
+<li>Kotlin文件类型有class, object, menu, interface</li>
+<li>伴生对象对应java中的static</li>
+<li>但例采用object </li>
+<li>高阶函数</li>
+<li>Lambda表达式</li>
+<li>详见博客《Kotlin基础语法》<h4 id="Vertx"><a href="#Vertx" class="headerlink" title="Vertx"></a>Vertx</h4></li>
+<li>EvenBus异步执行，提高执行效率</li>
+<li>使用多层嵌套解决同步问题</li>
+<li>使用标签跳出指定层<h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/SpringBoot入门/" rel="next" title="SpringBoot入门">
+                <i class="fa fa-chevron-left"></i> SpringBoot入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/28/Redis为什么快/" rel="prev" title="Redis为什么快">
+                Redis为什么快 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Murphy</p>
+              <p class="site-description motion-element" itemprop="description">人生没有白走的路，每一步都作数 ：）</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">68</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaSE"><span class="nav-number">1.</span> <span class="nav-text">JavaSE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程"><span class="nav-number">1.1.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO流"><span class="nav-number">1.2.</span> <span class="nav-text">IO流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反射"><span class="nav-number">1.3.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合"><span class="nav-number">1.4.</span> <span class="nav-text">集合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前台框架"><span class="nav-number">2.</span> <span class="nav-text">前台框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript"><span class="nav-number">2.1.</span> <span class="nav-text">JavaScript</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jQuery"><span class="nav-number">2.2.</span> <span class="nav-text">jQuery</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#React"><span class="nav-number">2.3.</span> <span class="nav-text">React</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台框架"><span class="nav-number">3.</span> <span class="nav-text">后台框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringMvc"><span class="nav-number">3.1.</span> <span class="nav-text">SpringMvc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring"><span class="nav-number">3.2.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mybatis"><span class="nav-number">3.3.</span> <span class="nav-text">Mybatis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Struts2"><span class="nav-number">3.4.</span> <span class="nav-text">Struts2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hibernate"><span class="nav-number">3.5.</span> <span class="nav-text">Hibernate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringBoot"><span class="nav-number">3.6.</span> <span class="nav-text">SpringBoot</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器"><span class="nav-number">4.</span> <span class="nav-text">服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tomcat"><span class="nav-number">4.1.</span> <span class="nav-text">Tomcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx"><span class="nav-number">4.2.</span> <span class="nav-text">Nginx</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库"><span class="nav-number">5.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MySQL"><span class="nav-number">5.1.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis"><span class="nav-number">5.2.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MongoDB"><span class="nav-number">5.3.</span> <span class="nav-text">MongoDB</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术点"><span class="nav-number">6.</span> <span class="nav-text">技术点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dubbo"><span class="nav-number">6.1.</span> <span class="nav-text">Dubbo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ActiveMQ"><span class="nav-number">6.2.</span> <span class="nav-text">ActiveMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Zookeeper"><span class="nav-number">6.3.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Freemarker"><span class="nav-number">6.4.</span> <span class="nav-text">Freemarker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SwaggerAPI"><span class="nav-number">6.5.</span> <span class="nav-text">SwaggerAPI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solr"><span class="nav-number">6.6.</span> <span class="nav-text">Solr</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FastDFS"><span class="nav-number">6.7.</span> <span class="nav-text">FastDFS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定时任务框架"><span class="nav-number">6.8.</span> <span class="nav-text">定时任务框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebService（CXF）"><span class="nav-number">6.9.</span> <span class="nav-text">WebService（CXF）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shiro"><span class="nav-number">6.10.</span> <span class="nav-text">Shiro</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发工具"><span class="nav-number">7.</span> <span class="nav-text">开发工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IDEA"><span class="nav-number">7.1.</span> <span class="nav-text">IDEA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostMan"><span class="nav-number">7.2.</span> <span class="nav-text">PostMan</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Charles"><span class="nav-number">7.3.</span> <span class="nav-text">Charles</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Datagrid"><span class="nav-number">7.4.</span> <span class="nav-text">Datagrid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu"><span class="nav-number">7.5.</span> <span class="nav-text">Ubuntu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GIT"><span class="nav-number">7.6.</span> <span class="nav-text">GIT</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加分项"><span class="nav-number">8.</span> <span class="nav-text">加分项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin"><span class="nav-number">8.1.</span> <span class="nav-text">Kotlin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vertx"><span class="nav-number">8.2.</span> <span class="nav-text">Vertx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python"><span class="nav-number">8.3.</span> <span class="nav-text">Python</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2014 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Murphy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.6.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
